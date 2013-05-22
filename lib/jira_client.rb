@@ -101,6 +101,11 @@ module JiraClient
           options[:password] = JiraClient.configuration.password
         end
 
+        unless JiraClient.configuration.ca_file.nil?
+          options[:ssl_ca_file] = File.read(JiraClient.configuration.ca_file)
+          options[:verify_ssl] = OpenSSL::SSL::VERIFY_PEER
+        end
+
         RestClient::Resource.new(url, options)
       end
     end

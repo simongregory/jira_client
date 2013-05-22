@@ -1,6 +1,7 @@
 module JiraClient
   class Configuration
-    attr_accessor :base_url, :api_path, :port, :proxy, :username, :password, :certificate, :certificate_passphrase
+    attr_accessor :base_url, :api_path, :port, :proxy, :username, :password, :certificate,
+                  :certificate_passphrase, :ca_file
 
     def initialize
       @base_url = nil
@@ -11,6 +12,7 @@ module JiraClient
       @password = nil
       @certificate = nil
       @certificate_passphrase = nil
+      @ca_file = nil
     end
 
     def full_url

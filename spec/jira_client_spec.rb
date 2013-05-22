@@ -46,4 +46,22 @@ describe JiraClient do
       @resource_options[:verify_ssl].should == OpenSSL::SSL::VERIFY_NONE
     end
   end
+
+  describe "peer verification" do
+
+    before do
+      JiraClient.configure do |config|
+        config.ca_file = fixture("cert_authority.pem")
+      end
+      @resource_options = JiraClient.send(:resource).options
+    end
+
+    it "sets ca_file" do
+      @resource_options[:ssl_ca_file].should_not be_nil
+    end
+    it "sets verify_ssl" do
+      @resource_options[:verify_ssl].should_not be_nil
+      @resource_options[:verify_ssl].should == OpenSSL::SSL::VERIFY_PEER
+    end
+  end
 end
